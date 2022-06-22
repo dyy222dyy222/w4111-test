@@ -1,5 +1,4 @@
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
 
 peak_hours_pu = """
     SELECT rt.restaurant_name,
@@ -146,8 +145,8 @@ def fetch_churn_rate(args):
         c4 = "r.order_time"
         v3 = args["consult_from"]
         v3 = datetime.strptime(v3, "%Y-%m-%dT%H:%M")
-        v2 = v3 - relativedelta(months=1)
-        v4 = "'" + datetime.strftime((v2 - relativedelta(months=1)), "%Y-%m-%d %H:%M:%S") + "'"
+        v2 = v3 - datetime.timedelta(months=1)
+        v4 = "'" + datetime.strftime((v2 - datetime.timedelta(months=1)), "%Y-%m-%d %H:%M:%S") + "'"
         v3 = "'" + datetime.strftime(v3, "%Y-%m-%d %H:%M:%S") + "'"
         v2 = "'" + datetime.strftime(v2, "%Y-%m-%d %H:%M:%S") + "'"
     
