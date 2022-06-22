@@ -35,9 +35,3 @@ def fetch_deliveryman(args):
     query = query.format(criteria1 = c1, criteria2 = c2, criteria3 = c3,
                          value1 = v1, value2 = v2, value3 = v3)
     return query
-
-args = {'deliveryman_id': 1,
-        'consult_from': '2010-01-01T11:11',
-        'consult_to': '2022-01-01T11:11'}
-
-print(fetch_deliveryman(args))
