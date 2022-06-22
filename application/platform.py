@@ -27,37 +27,41 @@ def fetch_pct_coupon(args):
     return query
 
 
-
 before_after = """
-    WITH customer_stats AS (SELECT customer_id,
-                                   (CASE 
-                                        WHEN customer_id IN (SELECT customer_id
-                                                            FROM coupon_used) THEN 'YES'
-                                        ELSE 'NO'
-                                    END) AS whether_use_coupon,
-                                    count(reservation_id) AS total_order_number,
-                                    avg(total_amount) AS avg_amount
-                            FROM reservation
-                            WHERE {criteria2} >= {value2}
-                                  AND {criteria3} <= {value3}
-                            GROUP BY customer_id)
-    SELECT whether_use_coupon,
-           round(avg(total_order_number),2) AS avg_order_number,
-           round(avg(avg_amount),2) AS avg_amount
-    FROM customer_stats
-    GROUP BY whether_use_coupon;
-"""
+WITH customer_stats AS (
+    SELECT customer_id,
+           (CASE 
+                WHEN customer_id IN (SELECT r.customer_id
+                                     FROM reservation r JOIN coupon_used cu ON r.reservation_id = cu.reservation_id
+                                                        JOIN customer c ON r.customer_id = c.customer_id
+                                     WHERE {criteria2} >= {value2}
+                                            AND {criteria3} <= {value3}) THEN 'YES'
+                ELSE 'NO'
+                END) AS whether_use_coupon,
+            count(reservation_id) AS total_order_number,
+            avg(total_amount) AS avg_amount
+    FROM reservation r
+    WHERE {criteria2} >= {value2}
+          AND {criteria3} <= {value3}
+          GROUP BY customer_id)
+SELECT whether_use_coupon,
+       round(avg(total_order_number),2) AS avg_order_number,
+       round(avg(avg_amount),2) AS avg_amount
+FROM customer_stats
+GROUP BY whether_use_coupon;"""
+
+
 
 def fetch_before_after(args):
     if 'consult_from' in args and len(args['consult_from']) > 0:
-        c2 = "order_time"
+        c2 = "r.order_time"
         v2 = args["consult_from"]
         v2 = "'" + v2.replace("T", " ") + ":00" + "'"
     else:
         c2 = 1
         v2 = 1
     if 'consult_to' in args and len(args['consult_to']) > 0:
-        c3 = "order_time"
+        c3 = "r.order_time"
         v3 = args["consult_to"]
         v3 = "'" + v3.replace("T", " ") + ":00" + "'"
     else:
@@ -68,6 +72,8 @@ def fetch_before_after(args):
     query = query.format(criteria2 = c2, criteria3 = c3,
                          value2 = v2, value3 = v3)
     return query
+
+
 
 customer_distribution = """
     SELECT ca.city,
