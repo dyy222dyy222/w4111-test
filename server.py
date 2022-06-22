@@ -129,7 +129,10 @@ def search_menu_design():
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
-  return render_template("menu_design_view.html", **dict(res = result))
+  if len(result) == 0:
+    return render_template("no_result.html")
+  else:
+    return render_template("menu_design_view.html", **dict(res = result))
 
 
 @app.route('/churn_rate', methods=["POST"])
@@ -142,7 +145,10 @@ def search_churn_rate():
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
-  return render_template("churn_rate_view.html", **dict(res = result))
+  if len(result) == 0:
+    return render_template("no_result.html")
+  else:
+    return render_template("churn_rate_view.html", **dict(res = result))
 
 @app.route('/avg_number_of_reservation', methods=["POST"])
 def search_avg_reservation():
@@ -154,7 +160,10 @@ def search_avg_reservation():
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
-  return render_template("number_of_reservation_view.html", **dict(res = result))
+  if len(result) == 0:
+    return render_template("no_result.html")
+  else:
+    return render_template("number_of_reservation_view.html", **dict(res = result))
 
 @app.route('/platform/', methods=["GET"])
 def platform_render():
@@ -170,7 +179,10 @@ def search_pct_coupon():
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
-  return render_template("percentage_of_coupon_used_view.html", **dict(res = result))
+  if len(result) == 0:
+    return render_template("no_result.html")
+  else:
+    return render_template("percentage_of_coupon_used_view.html", **dict(res = result))
 
 @app.route('/comparison_ordernumber_consumption_coupon', methods=["POST"])
 def search_before_after():
@@ -182,7 +194,10 @@ def search_before_after():
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
-  return render_template("before_after_view.html", **dict(res = result))
+  if len(result) == 0:
+    return render_template("no_result.html")
+  else:
+    return render_template("before_after_view.html", **dict(res = result))
 
 @app.route('/number_of_reservations_in_each_city', methods=["POST"])
 def search_customer_distribution():
@@ -194,7 +209,10 @@ def search_customer_distribution():
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
-  return render_template("number_of_reservations_in_each_city_view.html", **dict(res = result))
+  if len(result) == 0:
+    return render_template("no_result.html")
+  else:
+    return render_template("number_of_reservations_in_each_city_view.html", **dict(res = result))
 
 @app.route('/deliveryman/', methods=["GET"])
 def delivery_render():
@@ -210,7 +228,10 @@ def search_deliveryman():
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
-  return render_template("deliveryman_view.html", **dict(res = result))
+  if len(result) == 0:
+    return render_template("no_result.html")
+  else:
+    return render_template("deliveryman_view.html", **dict(res = result))
 
 
 @app.route('/customer/', methods=["GET"])
@@ -227,7 +248,10 @@ def search_popular_restaurant():
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
-  return render_template("popular_restaurant_view.html", **dict(res = result))
+  if len(result) == 0:
+    return render_template("no_result.html")
+  else:
+    return render_template("popular_restaurant_view.html", **dict(res = result))
 
 @app.route('/popular_dish', methods=["POST"])
 def search_popular_dish():
@@ -239,7 +263,10 @@ def search_popular_dish():
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
-  return render_template("popular_dish_view.html", **dict(res = result))
+  if len(result) == 0:
+    return render_template("no_result.html")
+  else:
+    return render_template("popular_dish_view.html", **dict(res = result))
 
 
 if __name__ == "__main__":
