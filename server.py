@@ -113,7 +113,10 @@ def search_peak_hours():
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
-  return render_template("peak_hours_view.html", **dict(res = result))
+  if len(result) == 0:
+    return render_template("no_result.html")
+  else:
+    return render_template("peak_hours_view.html", **dict(res = result))
 
 
 @app.route('/menu_design', methods=["POST"])
