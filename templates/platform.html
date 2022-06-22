@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: "Lato", sans-serif;
+}
+ 
+.sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+ 
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 28px;
+  color: #818181;
+  display: block;
+}
+ 
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+ 
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+  font-size: 20px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+ 
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 20px;}
+}
+
+.right_section{
+  margin-left: 200px; /* Same as the width of the sidenav */
+  font-size: 20px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+  inline-size: 20px;
+  width: 100%;
+}
+
+.right_section input{
+  font-size: 20px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+.downbox{
+        margin-left: 200px;
+        display: box;
+        margin-top: 5px;
+        height: 70px;
+        width: 500px;
+        border-top:solid black 2px;
+        border-bottom:none ;
+        border-left: none;
+        border-right: none;
+    }
+    
+.downbox legend{
+        margin-left: 200px;
+        font-weight:600;
+        color: black;
+        opacity: 100;
+        font-size: 20px;
+        margin:0 auto;
+    }
+
+.downbox input{
+    margin-left: 200px;
+    font-weight:600;
+    color: black;
+    opacity: 100;
+    font-size: 20px;
+    margin:0 auto;
+}
+
+.common_content form fieldset{
+  margin-left: 200px;
+  font-weight:600;
+  color: black;
+  opacity: 100;
+  font-size: 20px;
+  margin:0 auto;
+  line-height:30px;
+}
+
+.common_content form fieldset p{
+  margin-left: 200px;
+  font-weight:300;
+  color: black;
+  opacity: 100;
+  font-size: 16px;
+  margin:0 auto;
+}
+.common_content form fieldset label input{
+  margin-left: 200px;
+  font-weight:300;
+  color: black;
+  opacity: 100;
+  font-size: 20px;
+  margin:0 auto;
+}
+
+</style>
+</head>
+<body>
+ 
+<div class="sidenav">
+  <a href="/restaurant">Restaurant</a>
+  <a href="/platform">Platform</a>
+  <a href="/customer">Customer</a>
+  <a href="/deliveryman">Deliveryman</a>
+</div>
+ 
+<div class="main">
+  <h2>Platform</h2>
+  <p>This page could help platform implement coupon marketing.</p>
+  <p>Platform could perform queries on 3 metrics: number of coupons used and shift of consumer behaviors(reservation times and consumption amount) with and without coupon, and number of orders in different cities.</p>
+ 
+</div>
+ 
+<hr /style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color="black" SIZE=3>
+
+
+<div class="right_section">
+    <div class="common_content">
+        <h4>Platform Management</h4>    
+        
+        <form accept-charset="UTF-8" action="/percentage_coupon_used" autocomplete="off" method="POST"
+            target="_blank">
+            <fieldset>
+                <legend>Percentage of Coupon Used</legend> 
+                <p>This query would compute the used coupon/coupon issued during the selected period.</p>
+                <label for="consult_from">Start Time: </label><input name="consult_from" type="datetime-local" value="" /> <br />
+                <label for="consult_to">End Time: </label><input name="consult_to" type="datetime-local" /> <br />
+                <input type="submit" value="Query the Percentage of Coupon Used" onclick="loading();">
+            </fieldset>
+        </form>
+        <br />
+        <hr/>
+
+        <form accept-charset="UTF-8" action="/comparison_ordernumber_consumption_coupon" autocomplete="off" method="POST"
+        target="_blank">
+        <fieldset>
+            <legend>Comparison: Metrics of Reservations with and without Coupon </legend> 
+            <p>This query would compare 2 groups of customers: who had used coupon at least once and who had never
+               used coupon from 2 metrics, average number of reservations and average consumption amount. </p>
+            <label for="consult_from">Start Time: </label><input name="consult_from" type="datetime-local" value="" /> <br />
+            <label for="consult_to">End Time: </label><input name="consult_to" type="datetime-local" /> <br />
+            <input type="submit" value="Query the Reservations Metrics with or without Coupon" onclick="loading();">
+        </fieldset>
+        </form>
+        <br /><hr/>
+
+        <form accept-charset="UTF-8" action="/number_of_reservations_in_each_city" autocomplete="off" method="POST"
+        target="_blank">
+        <fieldset>
+            <legend>Number of Reservations in Each City</legend> 
+            <p>This query would return the number of orders of each city in a descending order for the selected period.</p>
+            <label for="consult_from">Start Time: </label><input name="consult_from" type="datetime-local" value="" /> <br />
+            <label for="consult_to">End Time: </label><input name="consult_to" type="datetime-local" /> <br />
+            <input type="submit" value="Query the Number of Reservations in Each City" onclick="loading();">
+        </fieldset>
+        </form>
+        <br /><hr/>
+
+    </div>
+</div>
+
+</body>
+</html>
