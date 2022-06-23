@@ -142,6 +142,7 @@ body {
             <fieldset>
                 <legend>Popular Restaurant</legend> 
                 <p>This query would sort the restaurants based on number of reservations in selected period and will provide their average consumption amount.</p>
+                <p>If you enter 'ALL' for restaurant name, it would return the rank of all dishes in all restaurants.</p>
                 <label for="consult_from">Start Time: </label><input name="consult_from" type="datetime-local" value="" /> <br />
                 <label for="consult_to">End Time: </label><input name="consult_to" type="datetime-local" /> <br />
                 <input type="submit" value="Query the Popular Restaurant" onclick="loading();">
@@ -153,7 +154,7 @@ body {
         <form accept-charset="UTF-8" action="/popular_dish" autocomplete="off" method="POST"
         target="_blank">
         <fieldset>
-            <legend>Explore Popular Dishes in the selected Restaurant</legend> 
+            <legend>Popular Dishes</legend> 
             <p>This query would return dishes based on the number of reservations for the selected restaurant in the selected period. </p>
             <label for="restaurant_name">Restaurant Name: </label><input name="restaurant_name" type="text"value="" /> <br />
             <label for="consult_from">Start Time: </label><input name="consult_from" type="datetime-local" value="" /> <br />

@@ -125,7 +125,7 @@ body {
  
 <div class="main">
   <h2>Restaurant</h2>
-  <p>This page could help restaurants finding the peak hours, popular and unpopular dishes across time.</p>
+  <p>This page could help restaurants finding the peak hours, popular and unpopular dishes across time， monthly churn rate, and average reservations for each customer.</p>
   <p>These queries are useful in assisting restaurants daily management and menu design.</p>
  
 </div>
@@ -140,7 +140,8 @@ body {
         <form accept-charset="UTF-8" action="/peak_hours" autocomplete="off" method="POST"
             target="_blank">
             <fieldset>
-                <legend>Search for Peak Hours</legend> 
+                <legend>Peak Hours</legend> 
+                <p>This query would compute the peak hours for the selected restaurant and return the peak hours on a descending order by number of reservations.</p>
                 <label for="restaurant_name">Restaurant Name: </label><input name="restaurant_name" type="text"value="" /> <br />
                 <label for="delivery_type">Pickup/Delivery: </label><select name="delivery_type"><option value="pickup">Pickup</option><option value="delivery">Delivery</option></select><br />
                 <label for="consult_from">Start Time: </label><input name="consult_from" type="datetime-local" value="" /> <br />
@@ -155,7 +156,8 @@ body {
         <form accept-charset="UTF-8" action="/menu_design" autocomplete="off" method="POST"
         target="_blank">
         <fieldset>
-            <legend>Search for Popular and Unpopular Dishes</legend> 
+            <legend>Popular and Unpopular Dishes</legend>
+            <p>This query would return the popular dishes based on number of ordered times. If you enter 'ALL' for restaurant name, it would return the rank of all dishes in all restaurants. </p>
             <label for="restaurant_name">Restaurant Name: </label><input name="restaurant_name" type="text"value="" /> <br />
             <label for="popular/unpopular">Popular/Unpopular: </label><select name="popular/unpopular"><option value="popular">Popular</option><option value="unpopular">Unpopular</option></select><br />
             <label for="consult_from">Start Time: </label><input name="consult_from" type="datetime-local" value="" /> <br />
@@ -169,11 +171,12 @@ body {
         
          <form accept-charset="UTF-8" action="/churn_rate" autocomplete="off" method="POST" target="_blank">
           <fieldset>
-            <legend>Inspect on Monthly Churn Rate</legend> 
+            <legend>Monthly Churn Rate</legend> 
+            <p>This query would compute monthly churn rate based on select time. For example, if select 2021/06/21 00:00:00, it would compute monthly churn rate on a month cycle</p>
+            <p>e.g. 2021/05/21 00:00:00 to 2021/06/21 00:00:00</p>
+            <p>If there is no reservations in the previous period, it will return 999.</p>
             <label for="restaurant_name">Restaurant Name: </label><input name="restaurant_name" type="text"value="" /> <br />
             <label for="consult_from">End Time: </label><input name="consult_from" type="datetime-local" value="" /> <br />
-            <p>It will compute monthly churn rate based on select time. For example, if select 2021/06/21 00:00:00, it will compute monthly churn rate on a month cycle</p>
-            <p>e.g. 2021/05/21 00:00:00 to 2021/06/21 00:00:00</p>
             <input type="submit" value="Query Monthly Churn Rate" onclick="loading();">
           </fieldset>
          </form><br />
@@ -181,7 +184,8 @@ body {
          <form accept-charset="UTF-8" action="/avg_number_of_reservation" autocomplete="off" method="POST"
          target="_blank">
          <fieldset>
-             <legend>Compute the Average Number of Reservation for Each Customer</legend> 
+             <legend>Average Number of Reservation for Each Customer</legend> 
+             <p>This query would return the average number of reservations for each customer for the selected period.</p>
              <label for="restaurant_name">Restaurant Name : </label><input name="restaurant_name" type="text"value="" /> <br />
              <label for="consult_from">Start Time: </label><input name="consult_from" type="datetime-local" value="" /> <br />
              <label for="consult_to">End Time: </label><input name="consult_to" type="datetime-local" /> <br />
