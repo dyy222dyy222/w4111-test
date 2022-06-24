@@ -142,6 +142,7 @@ body {
             <fieldset>
                 <legend>Percentage of Coupon Used</legend> 
                 <p>This query would compute the used coupon/coupon issued during the selected period.</p>
+                <p>If there is zero coupon issued in this period, it will return 999.</p>
                 <label for="consult_from">Start Time: </label><input name="consult_from" type="datetime-local" value="" /> <br />
                 <label for="consult_to">End Time: </label><input name="consult_to" type="datetime-local" /> <br />
                 <input type="submit" value="Query the Percentage of Coupon Used" onclick="loading();">

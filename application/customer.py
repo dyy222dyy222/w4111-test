@@ -1,3 +1,7 @@
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+from sqlalchemy.sql import text
+
 popular_restaurant = """
     SELECT rt.restaurant_name,
            count(r.reservation_id) AS number_of_reservations,
@@ -11,25 +15,25 @@ popular_restaurant = """
 """
 
 def fetch_popular_restaurant(args):
-    if 'consult_from' in args and len(args['consult_from']) > 0:
-        c2 = "r.order_time"
-        v2 = args["consult_from"]
-        v2 = "'" + v2.replace("T", " ") + ":00" + "'"
+    c2 = "r.order_time"
+    c3 = "r.order_time"
+    v2 = ":start_time"
+    v3 = ":end_time"
+    if 'consult_from' in args and len(args['consult_from']) > 0:   
+        st = args['consult_from'].replace("T", " ")
     else:
-        c2 = 1
-        v2 = 1
+        st = '2000-01-01 00:00:00'
     if 'consult_to' in args and len(args['consult_to']) > 0:
-        c3 = "r.order_time"
-        v3 = args["consult_to"]
-        v3 = "'" + v3.replace("T", " ") + ":00" + "'"
+        et = args['consult_to'].replace("T", " ")
     else:
-        c3 = 1
-        v3 = 1
+        et = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
+
  
     query = popular_restaurant
     query = query.format(criteria2 = c2, criteria3 = c3,
                          value2 = v2, value3 = v3)
-    return query
+    query = text(query)
+    return [query, st, et]
 
 
 
@@ -48,28 +52,27 @@ popular_dish = """
 """
 
 def fetch_popular_dish(args):
+    c1 = "rt.restaurant_name"
+    c2 = "r.order_time"
+    c3 = "r.order_time"
+    v1 = ":restaurant_name"
+    v2 = ":start_time"
+    v3 = ":end_time"
     if 'restaurant_name' in args and len(args['restaurant_name']) > 0:
-        c1 = "rt.restaurant_name"
-        v1 = "'" + args["restaurant_name"] + "'"
+        rn = args['restaurant_name']
     else:
-        c1 = 1
-        v1 = 1
-    if 'consult_from' in args and len(args['consult_from']) > 0:
-        c2 = "r.order_time"
-        v2 = args["consult_from"]
-        v2 = "'" + v2.replace("T", " ") + ":00" + "'"
+        rn = '%'
+    if 'consult_from' in args and len(args['consult_from']) > 0:   
+        st = args['consult_from'].replace("T", " ")
     else:
-        c2 = 1
-        v2 = 1
+        st = '2000-01-01 00:00:00'
     if 'consult_to' in args and len(args['consult_to']) > 0:
-        c3 = "r.order_time"
-        v3 = args["consult_to"]
-        v3 = "'" + v3.replace("T", " ") + ":00" + "'"
+        et = args['consult_to'].replace("T", " ")
     else:
-        c3 = 1
-        v3 = 1
+        et = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
  
     query = popular_dish
     query = query.format(criteria1 = c1, criteria2 = c2, criteria3 = c3,
                          value1 = v1, value2 = v2, value3 = v3)
-    return query
+    query = text(query)
+    return [query, rn, st, et]

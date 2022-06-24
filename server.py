@@ -176,9 +176,9 @@ def platform_render():
 def search_pct_coupon():
   rows = ["percentage_coupon_used", "pct"]
   print(str(request.form))
-  query = application.platform.fetch_pct_coupon(request.form)
+  query, st, et = application.platform.fetch_pct_coupon(request.form)
   print(query)
-  cursor = g.conn.execute(query)
+  cursor = g.conn.execute(query, issue_time = st, expire_time = et)
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
@@ -191,9 +191,9 @@ def search_pct_coupon():
 def search_before_after():
   rows = ["whether_use_coupon", "avg_order_number", "avg_consumption_amount"]
   print(str(request.form))
-  query = application.platform.fetch_before_after(request.form)
+  query, st, et = application.platform.fetch_before_after(request.form)
   print(query)
-  cursor = g.conn.execute(query)
+  cursor = g.conn.execute(query, start_time = st, end_time = et)
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
@@ -206,9 +206,9 @@ def search_before_after():
 def search_customer_distribution():
   rows = ["city", "number_of_orders"]
   print(str(request.form))
-  query = application.platform.fetch_customer_distribution(request.form)
+  query, st, et = application.platform.fetch_customer_distribution(request.form)
   print(query)
-  cursor = g.conn.execute(query)
+  cursor = g.conn.execute(query, start_time = st, end_time = et)
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
@@ -223,11 +223,11 @@ def delivery_render():
 
 @app.route('/avg_delivery_time_tip', methods=["POST"])
 def search_deliveryman():
-  rows = ["deliveryman_name", "avg_delivery_time", "avg_delivery_tips"]
+  rows = ["deliveryman_id", "avg_delivery_time", "avg_delivery_tips"]
   print(str(request.form))
-  query = application.deliveryman.fetch_deliveryman(request.form)
+  query, did, st, et = application.deliveryman.fetch_deliveryman(request.form)
   print(query)
-  cursor = g.conn.execute(query)
+  cursor = g.conn.execute(query, deliveryman_id = did, start_time = st, end_time = et)
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
@@ -245,9 +245,9 @@ def customer_render():
 def search_popular_restaurant():
   rows = ["restaurant_name", "number_of_reservations", "avg_base_amount"]
   print(str(request.form))
-  query = application.customer.fetch_popular_restaurant(request.form)
+  query, st, et = application.customer.fetch_popular_restaurant(request.form)
   print(query)
-  cursor = g.conn.execute(query)
+  cursor = g.conn.execute(query, start_time = st, end_time = et)
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
@@ -260,9 +260,9 @@ def search_popular_restaurant():
 def search_popular_dish():
   rows = ["item_name", "number_of_orders"]
   print(str(request.form))
-  query = application.customer.fetch_popular_dish(request.form)
+  query, rn, st, et = application.customer.fetch_popular_dish(request.form)
   print(query)
-  cursor = g.conn.execute(query)
+  cursor = g.conn.execute(query, restaurant_name = rn, start_time = st, end_time = et)
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
