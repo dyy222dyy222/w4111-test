@@ -107,9 +107,9 @@ def restaurant_render():
 def search_peak_hours():
   rows = ["restaurant_name", "order_hour", "total_orders_per_hour"]
   print(str(request.form))
-  query = application.restaurant.fetch_peak_hours(request.form)
+  query, rn, st, et = application.restaurant.fetch_peak_hours(request.form)
   print(query)
-  cursor = g.conn.execute(query)
+  cursor = g.conn.execute(query, restaurant_name = rn, start_time = st, end_time = et)
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
@@ -118,14 +118,13 @@ def search_peak_hours():
   else:
     return render_template("peak_hours_view.html", **dict(res = result))
 
-
 @app.route('/menu_design', methods=["POST"])
 def search_menu_design():
   rows = ["item_name", "order_times"]
   print(str(request.form))
-  query = application.restaurant.fetch_menu_design(request.form)
+  query, rn, st, et = application.restaurant.fetch_menu_design(request.form)
   print(query)
-  cursor = g.conn.execute(query)
+  cursor = g.conn.execute(query, restaurant_name = rn, start_time = st, end_time = et)
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
@@ -137,26 +136,30 @@ def search_menu_design():
 
 @app.route('/churn_rate', methods=["POST"])
 def search_churn_rate():
-  rows = ["restaurant_name", "monthly_churn_rate"]
+  rows = ["monthly_churn_rate"]
   print(str(request.form))
-  query = application.restaurant.fetch_churn_rate(request.form)
+  query, rn, et, et1, et2 = application.restaurant.fetch_churn_rate(request.form)
   print(query)
-  cursor = g.conn.execute(query)
-  result = []
-  for c in cursor:
-    result.append(dict(zip(rows, c)))
-  if len(result) == 0:
-    return render_template("no_result.html")
+  if et != '':
+    cursor = g.conn.execute(query, restaurant_name = rn, end_time = et, minus1 = et1, minus2 = et2)
+    result = []
+    for c in cursor:
+      result.append(dict(zip(rows, c)))
+    if len(result) == 0:
+      return render_template("no_result.html")
+    else:
+      return render_template("churn_rate_view.html", **dict(res = result))
   else:
-    return render_template("churn_rate_view.html", **dict(res = result))
+    return render_template("no_result.html")
 
 @app.route('/avg_number_of_reservation', methods=["POST"])
 def search_avg_reservation():
   rows = ["customer_id", "number_of_reservation", "more_than_avg"]
   print(str(request.form))
-  query = application.restaurant.fetch_avg_res(request.form)
+  query, rn, st, et = application.restaurant.fetch_avg_res(request.form)
   print(query)
-  cursor = g.conn.execute(query)
+  print(rn)
+  cursor = g.conn.execute(query, restaurant_name = rn, start_time = st, end_time = et)
   result = []
   for c in cursor:
     result.append(dict(zip(rows, c)))
