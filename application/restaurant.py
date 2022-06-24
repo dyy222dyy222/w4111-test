@@ -131,7 +131,7 @@ churn_rate = """
     )
     SELECT CASE
                 WHEN COUNT(f.customer_id) = 0 THEN 999
-           ELSE ROUND((COUNT(f.customer_id) - COUNT(s.customer_id))/COUNT(f.customer_id),2)
+           ELSE ROUND((cast(COUNT(f.customer_id) - COUNT(s.customer_id)as float)/CAST(COUNT(f.customer_id) AS FLOAT))::numeric,2)
            END AS churn_rate
     FROM first_month f LEFT JOIN second_month s ON f.customer_id = s.customer_id
 """
